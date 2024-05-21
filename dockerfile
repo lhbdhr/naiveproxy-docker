@@ -1,10 +1,11 @@
-FROM golang:1.20-alpine as build
+FROM golang:alpine as build
 
 RUN mkdir /naiveproxy
 WORKDIR /naiveproxy
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
-RUN xcaddy build v2.7.6 --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive \
-                        --with github.com/caddy-dns/cloudflare
+RUN xcaddy build \
+    --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive \
+    --with github.com/caddy-dns/cloudflare
 
 
 FROM alpine:latest as run
